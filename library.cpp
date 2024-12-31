@@ -4,7 +4,6 @@
 
 using namespace std;
 
-// Abstract Base Class
 class LibraryItem {
 protected:
     string title;
@@ -14,12 +13,11 @@ protected:
 public:
     LibraryItem(string t, string a, string d) : title(t), author(a), dueDate(d) {}
 
-    // Pure virtual functions (abstract methods)
     virtual void checkOut() = 0;
     virtual void returnItem() = 0;
     virtual void displayDetails() const = 0;
 
-    // Encapsulation: Getters and Setters
+    
     string getTitle() const { return title; }
     string getAuthor() const { return author; }
     string getDueDate() const { return dueDate; }
@@ -29,7 +27,6 @@ public:
     void setDueDate(string newDueDate) { dueDate = newDueDate; }
 };
 
-// Derived Class - Book
 class Book : public LibraryItem {
 public:
     Book(string t, string a, string d) : LibraryItem(t, a, d) {}
@@ -47,7 +44,6 @@ public:
     }
 };
 
-// Derived Class - DVD
 class DVD : public LibraryItem {
 public:
     DVD(string t, string a, string d) : LibraryItem(t, a, d) {}
@@ -65,7 +61,7 @@ public:
     }
 };
 
-// Derived Class - Magazine
+
 class Magazine : public LibraryItem {
 public:
     Magazine(string t, string a, string d) : LibraryItem(t, a, d) {}
@@ -83,14 +79,13 @@ public:
     }
 };
 
-// Library System Class to Manage Items
 class LibrarySystem {
 private:
-    vector<LibraryItem*> items;  // Vector of LibraryItem pointers
+    vector<LibraryItem*> items;  
 
 public:
     void addItem(LibraryItem* item) {
-        items.push_back(item);  // Adding item to the library
+        items.push_back(item);  
     }
 
     void displayItems() const {
@@ -100,7 +95,7 @@ public:
         }
         cout << "\nLibrary Items:\n";
         for (size_t i = 0; i < items.size(); ++i) {
-            items[i]->displayDetails();  // Polymorphism: Display details of each item
+            items[i]->displayDetails();  
         }
     }
 
@@ -109,7 +104,7 @@ public:
             cout << "Invalid index.\n";
             return;
         }
-        items[index]->checkOut();  // Polymorphism: Checkout item
+        items[index]->checkOut();  
     }
 
     void returnItem(int index) {
@@ -117,22 +112,20 @@ public:
             cout << "Invalid index.\n";
             return;
         }
-        items[index]->returnItem();  // Polymorphism: Return item
+        items[index]->returnItem();  
     }
 
     ~LibrarySystem() {
-        // Free dynamically allocated memory
         for (size_t i = 0; i < items.size(); ++i) {
             delete items[i];
         }
     }
 };
 
-// Main Function: Menu for Library Management System
 int main() {
     LibrarySystem library;
 
-    // Adding items to the library system
+    
     library.addItem(new Book("The Great Gatsby", "F. Scott Fitzgerald", "2024-01-15"));
     library.addItem(new DVD("Inception", "Christopher Nolan", "2024-01-22"));
     library.addItem(new Magazine("National Geographic", "Various Authors", "2024-02-01"));
@@ -177,4 +170,3 @@ int main() {
 
     return 0;
 }
-
